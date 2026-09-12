@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorkTrack | Assignment control room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app-shell" class="app-shell" hidden>
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">W</span><span>worktrack</span></div>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav-item active"><span class="nav-icon">▦</span>Overview</button>
+        <button class="nav-item"><span class="nav-icon">◌</span>Assignments</button>
+        <button class="nav-item"><span class="nav-icon">⌁</span>People</button>
+        <button class="nav-item"><span class="nav-icon">↗</span>Reports</button>
+      </nav>
+      <div class="sidebar-foot"><div class="sync-dot"></div><div><strong>Data synced</strong><span>Today, 09:42 AM</span></div></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar"><div><span class="breadcrumb">Operations / Overview</span><h1>Assignment control room</h1></div><div class="top-actions"><button class="icon-button" title="Notifications">♧<span class="notification-dot"></span></button><button id="account-button" class="avatar account-button" title="Account settings">admin</button></div></header>
+
+      <section class="hero-row"><div><p class="kicker">THURSDAY, 04 SEPTEMBER 2026</p><h2>Project reporting<br><em>in one place.</em></h2><p class="hero-copy">A clear view of every assigned activity in <strong id="active-report-name">the selected report</strong>.</p></div><div class="upload-card"><div class="upload-icon">↑</div><div><strong>Update the report</strong><span>Upload .xlsx or .csv</span></div><label class="upload-button">Choose file<input id="file-input" type="file" accept=".xlsx,.xls,.csv" /></label></div></section>
+
+      <section class="metrics" aria-label="Summary metrics">
+        <article class="metric-card accent"><div class="metric-top"><span>ASSIGNED WORK</span><span class="metric-symbol">◌</span></div><strong id="assigned-count">18</strong><div class="metric-foot"><span class="trend up">↑ 12%</span><span>vs last week</span></div></article>
+        <article class="metric-card"><div class="metric-top"><span>COMPLETED</span><span class="metric-symbol green">✓</span></div><strong id="completed-count">11</strong><div class="metric-foot"><span class="trend up">↑ 8%</span><span>completion rate</span></div></article>
+        <article class="metric-card"><div class="metric-top"><span>IN PROGRESS</span><span class="metric-symbol amber">◐</span></div><strong id="progress-count">4</strong><div class="metric-foot"><span class="trend neutral">22%</span><span>of all work</span></div></article>
+        <article class="metric-card"><div class="metric-top"><span>OVERDUE</span><span class="metric-symbol red">!</span></div><strong id="overdue-count">3</strong><div class="metric-foot"><span class="trend down">↓ 2%</span><span>needs attention</span></div></article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel workload-panel"><div class="panel-heading"><div><span class="section-label">PEOPLE</span><h3>Team workload</h3></div><button class="text-button" id="people-view">View all <span>→</span></button></div><div id="people-list" class="people-list"></div></article>
+        <article class="panel activity-panel"><div class="panel-heading"><div><span class="section-label">ACTIVITY</span><h3>Recent updates</h3></div><button class="icon-button small" title="More activity">•••</button></div><div id="activity-list" class="activity-list"></div></article>
+      </section>
+
+      <section class="panel assignments-panel"><div class="panel-heading table-head"><div><span class="section-label">WORK REGISTER</span><h3>All assignments <span id="table-count" class="count-badge">18</span></h3></div><div class="table-tools"><label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Search activity or person" /></label><select id="status-filter" aria-label="Filter by status"><option value="all">All status</option><option value="Completed">Completed</option><option value="In progress">In progress</option><option value="Overdue">Overdue</option><option value="Not started">Not started</option></select><button class="export-button" id="export-button">↓ Export</button></div></div><div class="table-wrap"><table><thead><tr><th>Activity</th><th>Project</th><th>Subproject Name</th><th>Internal Key</th><th>Row No.</th><th>Item code</th><th>Milestone</th><th>Owner</th><th>Qty</th><th>Project Unit Price</th><th>Planned Budget</th><th>PR Qty</th><th>PR Total</th><th>PR Open Qty</th><th>PO Qty</th><th>PO Total</th><th>PO Open Qty</th><th>PO Balance Value</th><th>GRN Qty</th><th>GRN Open Qty</th><th>GRN Total</th><th>Invoice Qty</th><th>Invoice Total</th><th>Progress</th><th>Status</th></tr></thead><tbody id="assignment-table"></tbody></table></div></section>
+
+      <section id="reports-view" class="panel reports-panel" hidden><div class="panel-heading"><div><span class="section-label">REPORT LIBRARY</span><h3>Viewed reports <span id="report-count" class="count-badge">0</span></h3></div><button class="text-button" id="overview-view">← Back to overview</button></div><div id="report-list" class="report-list"></div></section>
+
+      <footer class="footer"><span>WorkTrack · Internal operations tool</span><span>Last import: <strong id="last-import">Tigadi Deepak report 1111.xlsx</strong></span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <div id="login-gate" class="login-gate"><div class="login-visual"><span class="brand-mark">W</span><span class="login-visual-label">WORKTRACK</span><h1>Reports that move<br><em>work forward.</em></h1><p>One clear view for every assignment, milestone, and procurement decision.</p></div><div class="login-card"><div class="login-mode-tabs"><button id="login-mode-button" type="button" class="login-mode active">Sign in</button><button id="change-mode-button" type="button" class="login-mode">Change password</button></div><form id="login-form"><span class="section-label">WORKTRACK SECURE ACCESS</span><h2>Company sign in</h2><p>Use your organization account to view shared reports and audit history.</p><button id="company-login" type="button" class="company-login" hidden>Continue with company account</button><div id="local-login"><label>Username<input id="login-username" autocomplete="username" value="admin" required /></label><label>Password<div class="password-field"><input id="login-password" type="password" autocomplete="current-password" required /><button type="button" class="password-toggle" data-password-target="login-password" aria-label="Show password">Show</button></div></label><button type="submit" class="upload-button">Sign in</button></div><small id="login-error"></small></form><form id="login-password-form" hidden><span class="section-label">ACCOUNT SECURITY</span><h2>Change password</h2><p>Verify your current password, then choose a new one with at least 8 characters.</p><label>Username<input id="change-username" autocomplete="username" value="admin" required /></label><label>Current password<div class="password-field"><input id="change-current-password" type="password" autocomplete="current-password" required /><button type="button" class="password-toggle" data-password-target="change-current-password" aria-label="Show password">Show</button></div></label><label>New password<div class="password-field"><input id="login-new-password" type="password" autocomplete="new-password" minlength="8" required /><button type="button" class="password-toggle" data-password-target="login-new-password" aria-label="Show password">Show</button></div></label><label>Confirm new password<div class="password-field"><input id="login-confirm-password" type="password" autocomplete="new-password" minlength="8" required /><button type="button" class="password-toggle" data-password-target="login-confirm-password" aria-label="Show password">Show</button></div></label><button type="submit" class="upload-button">Update password</button><small id="login-password-error"></small></form></div></div>
+  <div id="account-panel" class="login-gate" hidden><form id="password-form" class="login-card"><button id="close-account" type="button" class="close-button" aria-label="Close account settings">×</button><span class="section-label">ACCOUNT SECURITY</span><h2>Change password</h2><p>Choose a new password with at least 8 characters. Your current password cannot be viewed.</p><label>Current password<div class="password-field"><input id="current-password" type="password" autocomplete="current-password" required /><button type="button" class="password-toggle" data-password-target="current-password" aria-label="Show password">Show</button></div></label><label>New password<div class="password-field"><input id="new-password" type="password" autocomplete="new-password" minlength="8" required /><button type="button" class="password-toggle" data-password-target="new-password" aria-label="Show password">Show</button></div></label><label>Confirm new password<div class="password-field"><input id="confirm-password" type="password" autocomplete="new-password" minlength="8" required /><button type="button" class="password-toggle" data-password-target="confirm-password" aria-label="Show password">Show</button></div></label><button type="submit" class="upload-button">Update password</button><button id="logout-button" type="button" class="logout-button">Sign out</button><small id="password-error"></small></form></div>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="app.js"></script>
+  <script src="report-history.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
